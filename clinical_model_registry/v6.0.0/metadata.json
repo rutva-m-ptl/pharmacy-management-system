@@ -1,0 +1,25 @@
+{
+    "version": "v6.0.0",
+    "timestamp": "2026-11-05T12:05:51.544380",
+    "stage": "Staging",
+    "sha256_checksum": "834b41ec2952256c9652760dbbc3bd0d1322b6087899b871cb3b65e9c95a7100",
+    "features": [
+        "biomarker_1",
+        "biomarker_2",
+        "biomarker_3",
+        "biomarker_4",
+        "biomarker_5",
+        "biomarker_6",
+        "biomarker_7",
+        "biomarker_8"
+    ],
+    "parameters": {
+        "learning_rate": 0.08,
+        "max_depth": 6,
+        "max_iter": 120
+    },
+    "metrics": {
+        "roc_auc": 0.9807,
+        "f1_score": 0.9307
+    }
+}
