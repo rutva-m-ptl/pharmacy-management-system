@@ -1,0 +1,22 @@
+Data Preprocessing and Lineage Report
+Pipeline: clinical_diagnostic_preprocessing_v1
+Run Time: 2026-11-19T11:29:53.291828
+Environment: scikit-learn 1.6.1 (seed 42)
+
+Data Lineage
+Raw Source (raw_clinical_intake): 1500 rows, 7 columns, SHA-256 79f81d6672af0b9e...
+Processed Output (df_processed): 1500 rows, 9 columns, SHA-256 ccc22792a4e88e35...
+
+Notes:
+- Removed patient ID column (patient_id) before processing.
+- Added binary missingness indicator columns to track missing lab values.
+
+Feature Transformations
+age: bounds [18.0, 110.0], clipped 2, median 62.7, IQR scale 18.2
+troponin: bounds [0.0, 50.0], clipped 0, median 0.2238, IQR scale 0.2701
+creatinine: bounds [0.2, 15.0], clipped 20, median 1.09, IQR scale 0.51
+systolic_bp: bounds [60.0, 250.0], clipped 1, median 134.0, IQR scale 24.0
+admission_type: one-hot encoded categories ['Elective', 'Emergency', 'Urgent']
+
+Output Features (9 total)
+num_block__age, num_block__troponin, num_block__creatinine, num_block__systolic_bp, num_block__missingindicator_troponin, num_block__missingindicator_creatinine, cat_block__admission_type_Elective, cat_block__admission_type_Emergency, cat_block__admission_type_Urgent

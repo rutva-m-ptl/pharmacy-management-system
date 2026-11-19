@@ -1,0 +1,120 @@
+{
+    "governance_metadata": {
+        "pipeline_name": "clinical_diagnostic_preprocessing_v1",
+        "execution_timestamp": "2026-11-19T11:29:53.291828",
+        "sklearn_version": "1.6.1",
+        "random_seed": 42
+    },
+    "data_lineage": {
+        "source_table": "raw_clinical_intake",
+        "source_row_count": 1500,
+        "source_sha256": "79f81d6672af0b9ed3d7b617aafbd3c5f7f9bec02d0a079580c766e9154717c9",
+        "dropped_pii_columns": [
+            "patient_id"
+        ],
+        "output_row_count": 1500,
+        "output_column_count": 9,
+        "output_sha256": "ccc22792a4e88e35e935f4fba6a96cddbfc08b9206e16d77f09ae9c982bf0cf2"
+    },
+    "transformation_steps": [
+        {
+            "step_order": 1,
+            "step_name": "Physiological Bound Clipping",
+            "columns_affected": [
+                "age",
+                "troponin",
+                "creatinine",
+                "systolic_bp"
+            ],
+            "audit_details": {
+                "age": {
+                    "lower_bound": 18.0,
+                    "upper_bound": 110.0,
+                    "values_clipped_low": 1,
+                    "values_clipped_high": 1
+                },
+                "troponin": {
+                    "lower_bound": 0.0,
+                    "upper_bound": 50.0,
+                    "values_clipped_low": 0,
+                    "values_clipped_high": 0
+                },
+                "creatinine": {
+                    "lower_bound": 0.2,
+                    "upper_bound": 15.0,
+                    "values_clipped_low": 20,
+                    "values_clipped_high": 0
+                },
+                "systolic_bp": {
+                    "lower_bound": 60.0,
+                    "upper_bound": 250.0,
+                    "values_clipped_low": 0,
+                    "values_clipped_high": 1
+                }
+            }
+        },
+        {
+            "step_order": 2,
+            "step_name": "Numeric Median Imputation + Missingness Indicators",
+            "columns_affected": [
+                "age",
+                "troponin",
+                "creatinine",
+                "systolic_bp"
+            ],
+            "learned_medians": {
+                "age": 62.7,
+                "troponin": 0.2238,
+                "creatinine": 1.09,
+                "systolic_bp": 134.0
+            }
+        },
+        {
+            "step_order": 3,
+            "step_name": "Numeric Robust Scaling (IQR)",
+            "columns_affected": [
+                "age",
+                "troponin",
+                "creatinine",
+                "systolic_bp"
+            ],
+            "learned_centers": {
+                "age": 62.7,
+                "troponin": 0.2238,
+                "creatinine": 1.09,
+                "systolic_bp": 134.0
+            },
+            "learned_scales": {
+                "age": 18.2,
+                "troponin": 0.2701,
+                "creatinine": 0.51,
+                "systolic_bp": 24.0
+            }
+        },
+        {
+            "step_order": 4,
+            "step_name": "Categorical One-Hot Encoding",
+            "columns_affected": [
+                "admission_type"
+            ],
+            "learned_categories": {
+                "admission_type": [
+                    "Elective",
+                    "Emergency",
+                    "Urgent"
+                ]
+            }
+        }
+    ],
+    "output_schema": [
+        "num_block__age",
+        "num_block__troponin",
+        "num_block__creatinine",
+        "num_block__systolic_bp",
+        "num_block__missingindicator_troponin",
+        "num_block__missingindicator_creatinine",
+        "cat_block__admission_type_Elective",
+        "cat_block__admission_type_Emergency",
+        "cat_block__admission_type_Urgent"
+    ]
+}

@@ -1,0 +1,25 @@
+Model Comparison and Selection Report
+Date: 2026-11-19 11:36
+Dataset Splits: Train (1500), Validation (500), Holdout Test (500)
+
+Summary and Recommendation
+Selected Model: MLP Neural Network
+MLP Neural Network achieved the highest Holdout Test AUC-ROC (0.9725) and F1-Score (0.9426), while maintaining 95.6% sensitivity (recall) and 4.392 ms per-record inference latency. It is recommended for production deployment.
+
+Holdout Test Set Ranking
+               Model  Accuracy  Precision  Recall  F1-Score  AUC-ROC  Latency (ms)
+  MLP Neural Network     0.942     0.9297  0.9558    0.9426   0.9725         4.392
+HistGradientBoosting     0.912     0.8988  0.9277    0.9130   0.9632        10.554
+       Random Forest     0.884     0.9064  0.8554    0.8802   0.9536        16.660
+ Logistic Regression     0.734     0.7636  0.6747    0.7164   0.7842         3.810
+
+Generalization and Overfitting Check (Train vs Holdout Test)
+Logistic Regression: Train AUC 0.7868 vs Test AUC 0.7842 (gap 0.0026)
+Random Forest: Train AUC 0.9932 vs Test AUC 0.9536 (gap 0.0396)
+HistGradientBoosting: Train AUC 0.9999 vs Test AUC 0.9632 (gap 0.0367)
+MLP Neural Network: Train AUC 0.9982 vs Test AUC 0.9725 (gap 0.0257)
+
+Deployment Tradeoffs
+- MLP Neural Network: Best overall discrimination and balanced precision-recall tradeoff for clinical risk scoring.
+- Logistic Regression: Fastest inference speed and easiest interpretability, though lower non-linear accuracy.
+- Random Forest & MLP: Competitive performance, but higher memory footprint or slower training compared to MLP Neural Network.
